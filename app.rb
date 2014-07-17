@@ -1,12 +1,20 @@
-require 'sinatra/base'
+require "sinatra/base"
+require "rack-flash"
+require "active_record"
+require "gschool_database_connection"
 
-class MyApp < Sinatra::Base
+class App < Sinatra::Base
   enable :sessions
+  use Rack::Flash
 
-  get '/' do
-    hello
+  def initialize
+    super
+    @database_connection = GschoolDatabaseConnection::DatabaseConnection.establish(ENV["RACK_ENV"])
   end
 
-  run Sinatra::Application.run!
+  get '/' do
+    "hello"
+  end
+
 end
 
