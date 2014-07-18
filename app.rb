@@ -13,7 +13,16 @@ class App < Sinatra::Base
   end
 
   get '/' do
-    "hello"
+    erb :homepage
+  end
+
+  post '/image' do
+    image = params[:Image]
+    File.open('public/' + image[:filename], "w") do |f|
+      f.write(image[:tempfile].read)
+    end
+
+    redirect "/?image_name=#{image[:filename]}"
   end
 
 end
