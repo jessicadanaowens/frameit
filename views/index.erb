@@ -1,10 +1,8 @@
 <% if params[:user_name] || params[:image_name]%>
 
-  <h1>Welcome, <%= params[:user_name] %> </h1>
-
-  <h1>hello</h1>
-
-  <p>WHat up, what up!!!!</p>
+  <% if params[:user_name] %>
+    <h1>Welcome, <%= params[:user_name] %> </h1>
+  <% end %>
 
   <form enctype="multipart/form-data" action="/uploads" method="post">
     <input type="file" name="Image">
