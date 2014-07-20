@@ -24,17 +24,12 @@ class App < Sinatra::Base
   end
 
   post '/register/new' do
-    if @sql.user_array(params[:username]) != []
-      flash[:notice] = "username is already taken"
-      redirect '/register'
-    else
+    check_if_user_exists
     check_matching_passwords
     @sql.create_user(params[:username], params[:password])
     session_id
     user_name = @sql.username_array(session_id).first['username']
     redirect "/?user_name=#{user_name}"
-    end
-
   end
 
   post '/login' do
@@ -74,6 +69,13 @@ class App < Sinatra::Base
   def check_matching_passwords
     if params[:password] != params[:repeat_password]
       flash[:notice] = "passwords must match"
+      redirect '/register'
+    end
+  end
+
+  def check_if_user_exists
+    if @sql.user_array(params[:username]) != []
+      flash[:notice] = "username is already taken"
       redirect '/register'
     end
   end
