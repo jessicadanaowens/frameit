@@ -1,8 +1,14 @@
-
 feature "Picture uploading" do
   scenario "user can upload a picture" do
-
     visit "/"
+
+    click_on "Register Now"
+
+    fill_in "Username", :with => "jetaggart"
+    fill_in "Password", :with => "password"
+    fill_in "Repeat Password", :with => "password"
+    click_on "Register/Login"
+
     attach_file('Image', 'spec/frame.png')
     click_button "upload"
 
@@ -11,11 +17,9 @@ feature "Picture uploading" do
       expect(image).to_not be_nil
       expect(image['src']).to eq 'frame.png'
     end
-  end
 
-  scenario "user can upload a picture with spaces in the name" do
+    #user can upload a picture with spaces in the name
 
-    visit "/"
     attach_file('Image', 'spec/frame with spaces.png')
     click_button "upload"
 
