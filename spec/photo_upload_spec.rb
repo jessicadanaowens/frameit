@@ -1,3 +1,4 @@
+
 feature "Picture uploading" do
   scenario "user can upload a picture" do
 
@@ -21,7 +22,7 @@ feature "Picture uploading" do
     within('#container') do
       image = page.find('img')
       expect(image).to_not be_nil
-      expect(image['src']).to eq 'frame%20with%20spaces.png'
+      expect(image['src']).to eq 'frame_with_spaces.png'
     end
   end
 end

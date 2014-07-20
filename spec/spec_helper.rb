@@ -2,7 +2,7 @@ require_relative "./../app"
 require "capybara/rspec"
 ENV["RACK_ENV"] = "test"
 
-Capybara.app = App #why this??
+Capybara.app = App
 
 database_connection = GschoolDatabaseConnection::DatabaseConnection.establish(ENV["RACK_ENV"])
 

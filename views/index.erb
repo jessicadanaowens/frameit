@@ -1,0 +1,39 @@
+<% if params[:user_name] %>
+
+  <h1>Welcome, <%= params[:user_name] %> </h1>
+
+  <h1>hello</h1>
+
+  <p>WHat up, what up!!!!</p>
+
+  <form enctype="multipart/form-data" action="/uploads" method="post">
+    <input type="file" name="Image">
+    <input type="submit" value="upload">
+  </form>
+
+  <img src="<%= params[:image_name] %>">
+
+  <form action="/logout" method="POST">
+    <input type=submit value=Logout>
+  </form>
+
+<% else %>
+
+  <section>
+    <form action="/login" method="POST">
+      <label for=username>Username</label>
+      <input type=text id=username name=username required>
+
+      <label for=password>Password</label>
+      <input type=text id=password name=password required>
+
+      <input type=submit value=Login>
+    </form>
+  </section>
+
+  <section>
+    <a href="/register">Register Now</a>
+  </section>
+
+<% end %>
+

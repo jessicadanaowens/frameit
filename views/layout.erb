@@ -18,6 +18,7 @@
   </header>
 
   <div id="container">
+    <%= flash[:notice] if flash[:notice] %>
     <%= yield %>
   </div>
 

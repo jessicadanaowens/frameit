@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: yourock
+  database: frameit
   pool: 5
   username: gschool
   password:
@@ -9,7 +9,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: testyourock
+  database: frameit_test
   pool: 5
   username: gschool
   password:
