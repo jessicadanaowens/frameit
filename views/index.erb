@@ -1,44 +1,59 @@
 <% if session[:id] %>
 
-  <% if params[:user_name] %>
-    <h1>Welcome, <%= params[:user_name] %> </h1>
-  <% end %>
+  <div class="login_register_box">
 
-  <form enctype="multipart/form-data" action="/uploads" method="post">
-    <input type="file" name="Image">
-    <input type="submit" value="upload">
-  </form>
+    <form enctype="multipart/form-data" action="/uploads" method="post">
+      <input type="file" name="Image">
+      <input type="submit" value="upload">
+    </form>
 
-  <% if @sql_upload.user_uploads(session[:id]) != [] %>
 
-    <% @sql_upload.user_uploads(session[:id]).each do |filepath| %>
-      <img src="<%= filepath['filepath'] %>"
-           id="upload"
-      >
+
+    <% if @sql_upload.user_uploads(session[:id]) != [] %>
+
+
+      <% @sql_upload.user_uploads(session[:id]).each do |filepath| %>
+        <div id="image">
+          <img src="<%= filepath['filepath'] %>"
+               id="upload"
+          >
+
+          <form method="post" action="/uploads/<%= filepath["id"] %>">
+            <input type="hidden" name="_method" value="delete"/>
+            <input type="submit" value="Delete Picture"/>
+          </form>
+        </div>
+
       <% end %>
-  <% end %>
 
-  <form action="/logout" method="POST">
-    <input type=submit value=Logout>
-  </form>
+    <% end %>
 
+  </div>
 <% else %>
 
-  <section>
-    <form action="/login" method="POST">
-      <label for=username>Username</label>
-      <input type=text id=username name=username required>
+  <div class="login_register_box">
 
-      <label for=password>Password</label>
-      <input type=text id=password name=password required>
+    <section>
+      <div class="login">
+        <form action="/login" method="POST">
+          <label for=username>Username</label>
+          <input type=text id=username name=username required>
 
-      <input type=submit value=Login>
-    </form>
-  </section>
+          <label for=password>Password</label>
+          <input type=text id=password name=password required>
 
-  <section>
-    <a href="/register">Register Now</a>
-  </section>
+          <input type=submit value=Login>
+        </form>
+      </div>
+    </section>
+
+    <div class="register">
+      <section>
+        <a href="/register">Register Now</a>
+      </section>
+    </div>
+
+  </div>
 
 <% end %>
 

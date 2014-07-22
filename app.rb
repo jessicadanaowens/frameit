@@ -45,6 +45,7 @@ class App < Sinatra::Base
     else
       session[:id] = @sql.user_id(params[:username], params[:password])['id'].to_i
       user_name = @sql.username_array(session[:id]).first['username']
+      flash[:notice] = "Welcome, #{user_name}"
       redirect "/?user_name=#{user_name}"
     end
   end
@@ -76,6 +77,12 @@ class App < Sinatra::Base
       redirect back
     end
   end
+
+  post "/uploads/:id" do
+    @sql_upload.delete_upload(params[:id])
+    redirect back
+  end
+
 
   private
 

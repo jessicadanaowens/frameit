@@ -1,3 +1,4 @@
+
 feature "Picture uploading" do
   scenario "user can upload a picture" do
     visit "/"
@@ -18,6 +19,11 @@ feature "Picture uploading" do
       expect(image['src']).to eq 'frame.png'
     end
 
+    #user can delete images
+
+    click_button "Delete"
+    expect(image).to eq 'nil'
+
     #user gets error message if they don't select a file before clicking upload
 
     click_button "upload"
@@ -25,15 +31,20 @@ feature "Picture uploading" do
 
     #user sees all of their uploaded pictures
 
-    attach_file('Image', 'spec/IMG_6015.png')
-    click_button "upload"
-    save_and_open_page
-    within('#container') do
-      image = page.find('img')
-      expect(image).to_not be_nil
-      expect(image['src']).to eq 'frame.png'
-      expect(image['src']).to eq 'IMG_6015.png'
-      end
+    # attach_file('Image', 'spec/IMG_6015.png')
+    # click_button "upload"
+    #
+    # within('#container') do
+    #   image = page.find('img')
+    #   expect(image).to_not be_nil
+    #   expect(image['src']).to eq 'frame.png'
+    #   expect(image['src']).to eq 'IMG_6015.png'
+    # end
+
+
+
+
+
   end
 end
 

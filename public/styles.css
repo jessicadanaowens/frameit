@@ -1,16 +1,36 @@
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+#image {
+    display: inline-block;
+    padding: 20px;
+    width: 25%;
+    min-width: 200px;
+
+}
+
 #upload {
     width: 200px;
 
 }
 
 h1 {
-    color: #f2542c;
+    color: deeppink;
 }
 p {
-    color: #ffe066;
+    color: #4e0072;
+}
+
+label {
+    color: #4e0072;
 }
 body {
-    background-color: #ffe066;
+    background-color: white;
+}
+
+input {
+    color: #4e0072;
 }
 
 #container {
@@ -20,11 +40,49 @@ body {
 }
 
 header {
-    background-color: #016573;
+    background-color: #650292;
     padding: 10px;
     margin-right: -20px;
     margin-left: -20px;
     margin-top: -10px;
     display: block;
     margin-bottom: 20px;
+}
+
+.wrapper {
+    max-width: 960px;
+    margin: auto;
+    padding-left: 10px;
+}
+
+.register {
+    max-width: 150px;
+    display: inline-block;
+}
+
+.login {
+    max-width: 150px;
+    display: inline-block;
+}
+
+.login_register_box {
+    margin: auto;
+    max-width: 600px;
+    min-width: 200px;
+    border: thick solid lightgreen;
+    padding: 20px;
+}
+
+link {
+    style: none;
+}
+
+.flash {
+    color: deeppink;
+    background-color: deeppink;
+    padding: 10px;
+}
+
+.logout {
+    text-align: right;
 }
