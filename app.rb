@@ -5,6 +5,7 @@ require "gschool_database_connection"
 require "uri"
 require_relative "lib/sql_commands"
 require_relative "lib/sql_commands_uploads"
+require "./lib/picture"
 
 class App < Sinatra::Base
   enable :sessions
@@ -64,12 +65,7 @@ class App < Sinatra::Base
     p session[:id]
     puts '*' * 80
     if image
-      image_name = image[:filename].gsub(' ', '_')
-      @sql_upload.create_upload(session[:id], image_name)
-
-      File.open('public/' + image_name, "w") do |f|
-        f.write(image[:tempfile].read)
-      end
+      Picture.new(image, session[:id]).save
 
       redirect "/"
     else
