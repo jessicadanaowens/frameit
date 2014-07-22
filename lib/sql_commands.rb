@@ -9,8 +9,8 @@ class SqlCommands
     @database_connection.sql("INSERT INTO users (username, password) VALUES ('#{username}', '#{password}')")
   end
 
-  def user_id_array(username, password)
-    @database_connection.sql("SELECT id FROM users WHERE username = '#{username}' and password = '#{password}'")
+  def user_id(username, password)
+    @database_connection.sql("SELECT id FROM users WHERE username = '#{username}' and password = '#{password}'").first
   end
 
   def username_array(session_id)
@@ -31,6 +31,12 @@ class SqlCommands
 
   def user_password_array(username)
     @database_connection.sql("SELECT password FROM users WHERE username = '#{username}'")
+  end
+
+
+
+  def create_upload(user_id, filename)
+    @database_connection.sql("INSERT INTO uploads (user_id, filepath) VALUES ('#{user_id}', '#{filename}')")
   end
 
 end

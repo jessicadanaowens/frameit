@@ -4,6 +4,7 @@ require "rack-flash"
 require "gschool_database_connection"
 require "uri"
 require_relative "lib/sql_commands"
+require_relative "lib/sql_commands_uploads"
 
 class App < Sinatra::Base
   enable :sessions
@@ -12,6 +13,7 @@ class App < Sinatra::Base
   def initialize
     super
     @sql = SqlCommands.new
+    @sql_upload = SqlCommandsUploads.new
     @database_connection = GschoolDatabaseConnection::DatabaseConnection.establish(ENV["RACK_ENV"])
   end
 
@@ -27,8 +29,8 @@ class App < Sinatra::Base
     check_if_user_exists
     check_matching_passwords
     @sql.create_user(params[:username], params[:password])
-    session_id
-    user_name = @sql.username_array(session_id).first['username']
+    session[:id] = @sql.user_id(params[:username], params[:password])['id']
+    user_name = @sql.username_array(session[:id]).first['username']
     redirect "/?user_name=#{user_name}"
   end
 
@@ -41,8 +43,8 @@ class App < Sinatra::Base
       flash[:notice] = "Password is incorrect"
       redirect '/'
     else
-      session_id
-      user_name = @sql.username_array(session_id).first['username']
+      session[:id] = @sql.user_id(params[:username], params[:password])['id']
+      user_name = @sql.username_array(session[:id]).first['username']
       redirect "/?user_name=#{user_name}"
     end
   end
@@ -53,15 +55,26 @@ class App < Sinatra::Base
     redirect '/'
   end
 
+
   post '/uploads' do
-    # u = User.find_or_create_by_username params[:username]
 
     image = params[:Image]
-    image_name = image[:filename].gsub(' ', '_')
-    File.open('public/' + image_name, "w") do |f|
-      f.write(image[:tempfile].read)
+    puts '*' * 80
+    puts session[:id]
+    puts '*' * 80
+    if image
+      image_name = image[:filename]
+      @sql.create_upload(session[:id], image_name)
+
+      File.open('public/' + image_name, "w") do |f|
+        f.write(image[:tempfile].read)
+      end
+
+      redirect "/?image_name=#{image_name}"
+    else
+      flash[:notice] = "Please select an image to upload"
+      redirect back
     end
-    redirect "/?image_name=#{image_name}"
   end
 
   private
@@ -79,12 +92,6 @@ class App < Sinatra::Base
       redirect '/register'
     end
   end
-
-  def session_id
-    session[:id] = @sql.user_id_array(params[:username], params[:password]).first['id']
-    session[:id]
-  end
-
 
 end
 
