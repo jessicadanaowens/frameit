@@ -29,7 +29,7 @@ class App < Sinatra::Base
     check_if_user_exists
     check_matching_passwords
     @sql.create_user(params[:username], params[:password])
-    session[:id] = @sql.user_id(params[:username], params[:password])['id']
+    session[:id] = @sql.user_id(params[:username], params[:password])['id'].to_i
     user_name = @sql.username_array(session[:id]).first['username']
     redirect "/?user_name=#{user_name}"
   end
@@ -43,7 +43,7 @@ class App < Sinatra::Base
       flash[:notice] = "Password is incorrect"
       redirect '/'
     else
-      session[:id] = @sql.user_id(params[:username], params[:password])['id']
+      session[:id] = @sql.user_id(params[:username], params[:password])['id'].to_i
       user_name = @sql.username_array(session[:id]).first['username']
       redirect "/?user_name=#{user_name}"
     end
@@ -60,17 +60,17 @@ class App < Sinatra::Base
 
     image = params[:Image]
     puts '*' * 80
-    puts session[:id]
+    p session[:id]
     puts '*' * 80
     if image
-      image_name = image[:filename]
-      @sql.create_upload(session[:id], image_name)
+      image_name = image[:filename].gsub(' ', '_')
+      @sql_upload.create_upload(session[:id], image_name)
 
       File.open('public/' + image_name, "w") do |f|
         f.write(image[:tempfile].read)
       end
 
-      redirect "/?image_name=#{image_name}"
+      redirect "/"
     else
       flash[:notice] = "Please select an image to upload"
       redirect back

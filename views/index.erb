@@ -1,4 +1,4 @@
-<% if params[:user_name] || params[:image_name]%>
+<% if session[:id] %>
 
   <% if params[:user_name] %>
     <h1>Welcome, <%= params[:user_name] %> </h1>
@@ -9,7 +9,14 @@
     <input type="submit" value="upload">
   </form>
 
-  <img src="<%= params[:image_name] %>">
+  <% if @sql_upload.user_uploads(session[:id]) != [] %>
+
+    <% @sql_upload.user_uploads(session[:id]).each do |filepath| %>
+      <img src="<%= filepath['filepath'] %>"
+           id="upload"
+      >
+      <% end %>
+  <% end %>
 
   <form action="/logout" method="POST">
     <input type=submit value=Logout>

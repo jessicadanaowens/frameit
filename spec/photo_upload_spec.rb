@@ -18,16 +18,22 @@ feature "Picture uploading" do
       expect(image['src']).to eq 'frame.png'
     end
 
-    #user can upload a picture with spaces in the name
+    #user gets error message if they don't select a file before clicking upload
 
-    attach_file('Image', 'spec/frame with spaces.png')
     click_button "upload"
+    expect(page).to have_content("Please select an image to upload")
 
+    #user sees all of their uploaded pictures
+
+    attach_file('Image', 'spec/IMG_6015.png')
+    click_button "upload"
+    save_and_open_page
     within('#container') do
       image = page.find('img')
       expect(image).to_not be_nil
-      expect(image['src']).to eq 'frame_with_spaces.png'
-    end
+      expect(image['src']).to eq 'frame.png'
+      expect(image['src']).to eq 'IMG_6015.png'
+      end
   end
 end
 

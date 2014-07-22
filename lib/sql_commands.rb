@@ -33,10 +33,4 @@ class SqlCommands
     @database_connection.sql("SELECT password FROM users WHERE username = '#{username}'")
   end
 
-
-
-  def create_upload(user_id, filename)
-    @database_connection.sql("INSERT INTO uploads (user_id, filepath) VALUES ('#{user_id}', '#{filename}')")
-  end
-
 end
