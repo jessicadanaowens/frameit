@@ -17,4 +17,7 @@ class SqlCommandsUploads
     @database_connection.sql("DELETE FROM uploads WHERE id = #{id}")
   end
 
+  def select_upload(id)
+    @database_connection.sql("SELECT filepath FROM uploads WHERE id = #{id}")
+  end
 end

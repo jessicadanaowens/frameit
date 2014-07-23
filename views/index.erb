@@ -7,8 +7,6 @@
       <input type="submit" value="upload">
     </form>
 
-
-
     <% if @sql_upload.user_uploads(session[:id]) != [] %>
 
 
@@ -22,6 +20,11 @@
             <input type="hidden" name="_method" value="delete"/>
             <input type="submit" value="Delete Picture"/>
           </form>
+
+          <form method="post" action="/select/<%= filepath["id"] %>">
+            <input id=select name=select type=submit value=Select>
+          </form>
+
         </div>
 
       <% end %>
@@ -45,13 +48,12 @@
           <input type=submit value=Login>
         </form>
       </div>
-    </section>
 
-    <div class="register">
-      <section>
-        <a href="/register">Register Now</a>
-      </section>
-    </div>
+      <div class="register">
+          <a href="/register">Register Now</a>
+      </div>
+
+    </section>
 
   </div>
 

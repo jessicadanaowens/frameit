@@ -79,6 +79,10 @@ class App < Sinatra::Base
     redirect back
   end
 
+  post "/select/:id" do
+    erb :frame, :locals=>{:id=>params[:id]}
+  end
+
 
   private
 

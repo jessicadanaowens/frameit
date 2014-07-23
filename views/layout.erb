@@ -13,26 +13,26 @@
 
   <header>
     <div class="wrapper">
-      <h1>frame-it</h1>
-      <a href="/"><img src=""></a>
-
+      <div id="logo">
+        <h1>frame-it</h1>
+        <a href="/"><img src=""></a>
+      </div>
       <% if session[:id] %>
-
-      <div id="logout">
-
-      <form action="/logout" method="POST">
-        <input type=submit value=Logout>
-      </form>
+      <div id="navigation">
+        <div id="logout">
+          <form action="/logout" method="POST">
+            <input type=submit value=Logout>
+          </form>
+        </div>
       </div>
 
       <% end %>
-
 
     </div>
   </header>
 
   <div id="container">
-    <div id="flash"> <%= flash[:notice] if flash[:notice] %> </div>
+      <div id="flash"> <%= flash[:notice] if flash[:notice] %> </div>
     <%= yield %>
   </div>
 
