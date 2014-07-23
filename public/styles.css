@@ -100,8 +100,12 @@ link {
 
 }
 
-}
+
 #navigation {
     display: inline-block;
     text-align: right;
+}
+
+#canvas {
+    width: 200px;
 }
