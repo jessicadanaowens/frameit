@@ -61,9 +61,6 @@ class App < Sinatra::Base
   post '/uploads' do
 
     image = params[:Image]
-    puts '*' * 80
-    p session[:id]
-    puts '*' * 80
     if image
       Picture.new(image, session[:id]).save
 
