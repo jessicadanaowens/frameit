@@ -62,8 +62,7 @@ class App < Sinatra::Base
 
     image = params[:Image]
     if image
-      Picture.new(image, session[:id]).save
-
+      Picture.create(image, session[:id])
       redirect "/"
     else
       flash[:notice] = "Please select an image to upload"
@@ -71,7 +70,7 @@ class App < Sinatra::Base
     end
   end
 
-  delete "/uploads/:id" do
+  post "/uploads/:id" do
     @sql_upload.delete_upload(params[:id])
     redirect back
   end

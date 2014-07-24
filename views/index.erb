@@ -7,26 +7,23 @@
       <input type="submit" value="upload">
     </form>
 
-    <% @sql_upload.user_uploads(session[:id]).each do |filepath| %>
-      <div id="image">
-        <!--<img src="<%#= AWS.s3.buckets["frameit_bucket"].objects[filepath['filepath']].public_url %>"-->
-             <!--id="upload"-->
-        <!-->-->
+    <% @sql_upload.user_uploads(session[:id]).each do |image_name| %>
+        <img src="<%=Picture.new.upload(image_name['filepath'])%>"
+             id="image">
 
-        <form method="post" action="/uploads/<%= filepath["id"] %>">
+        <form method="post" action="/uploads/<%= image_name["id"] %>">
           <input type="hidden" name="_method" value="delete"/>
           <input type="submit" value="Delete Picture"/>
         </form>
 
-        <form method="post" action="/select/<%= filepath["id"] %>">
+        <form method="post" action="/select/<%= image_name["id"] %>">
           <input id=select name=select type=submit value=Select>
         </form>
-
-      </div>
 
     <% end %>
 
   </div>
+
 <% else %>
 
   <div class="login_register_box">
