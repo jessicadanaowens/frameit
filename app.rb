@@ -71,7 +71,7 @@ class App < Sinatra::Base
     end
   end
 
-  post "/uploads/:id" do
+  delete "/uploads/:id" do
     @sql_upload.delete_upload(params[:id])
     redirect back
   end

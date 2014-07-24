@@ -16,6 +16,9 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
+    aws-sdk (1.48.1)
+      json (~> 1.4)
+      nokogiri (>= 1.4.4)
     builder (3.2.2)
     capybara (2.4.1)
       mime-types (>= 1.16)
@@ -91,6 +94,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  aws-sdk
   capybara (~> 2.4.1)
   carrierwave (~> 0.10.0)
   gschool_database_connection
