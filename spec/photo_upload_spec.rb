@@ -1,3 +1,4 @@
+require 'spec_helper'
 
 feature "Picture uploading" do
   scenario "user can upload a picture" do
@@ -16,34 +17,31 @@ feature "Picture uploading" do
     within('#container') do
       image = page.find('img')
       expect(image).to_not be_nil
-      expect(image['src']).to eq 'frame.png'
+      expect(image['src']).to eq 'https://s3.amazonaws.com/frame_it_bucket/frame.png'
     end
+
+    #user can select an image and go to a new page
+
+    click_button "Select"
+
+    within('#container') do
+      image = page.find('img')
+      expect(image).to_not be_nil
+      expect(image['src']).to eq '/frame.png'
+    end
+
+    click_link "Back to gallery"
 
     #user can delete images
 
     click_button "Delete"
-    expect(image).to eq 'nil'
+    img = page.find('img')
+    expect(img['src']).to_not eq 'https://s3.amazonaws.com/frame_it_bucket/frame.png'
 
     #user gets error message if they don't select a file before clicking upload
 
     click_button "upload"
     expect(page).to have_content("Please select an image to upload")
-
-    #user sees all of their uploaded pictures
-
-    # attach_file('Image', 'spec/IMG_6015.png')
-    # click_button "upload"
-    #
-    # within('#container') do
-    #   image = page.find('img')
-    #   expect(image).to_not be_nil
-    #   expect(image['src']).to eq 'frame.png'
-    #   expect(image['src']).to eq 'IMG_6015.png'
-    # end
-
-
-
-
 
   end
 end

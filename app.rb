@@ -10,6 +10,7 @@ require "./lib/picture"
 class App < Sinatra::Base
   enable :sessions
   use Rack::Flash
+  set :method_override, true
 
   def initialize
     super
@@ -70,8 +71,9 @@ class App < Sinatra::Base
     end
   end
 
-  post "/uploads/:id" do
-    @sql_upload.delete_upload(params[:id])
+  delete "/uploads/:id" do
+
+    Picture.new.delete(params[:id])
     redirect back
   end
 

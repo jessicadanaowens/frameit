@@ -29,7 +29,21 @@ class Picture
 
   end
 
-  def delete(image)
-    
+  def delete(id)
+
+    s3 = AWS::S3.new(
+      :access_key_id => ENV['ACCESS_KEY_ID'],
+      :secret_access_key => ENV['SECRET_ACCESS_KEY']
+    )
+
+    image = SqlCommandsUploads.new.select_upload(id).first['filepath']
+
+    bucket = s3.buckets["frame_it_bucket"]
+
+    bucket.objects.delete(bucket_name: "frame_it_bucket", key: "#{image}")
+
+    sql_upload = SqlCommandsUploads.new
+    sql_upload.delete_upload(id)
+
   end
 end
